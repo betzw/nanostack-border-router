@@ -72,6 +72,16 @@
             "platform.stdio-convert-newlines": true,
             "platform.stdio-baud-rate": 115200
         },
+        "K64F": {
+            "LED": "LED_GREEN",
+            "SERIAL_TX": "PTE0",
+            "SERIAL_RX": "PTE1",
+            "SERIAL_CTS": "PTE2",
+            "SERIAL_RTS": "PTE3"
+        },
+        "K66F": {
+            "LED": "LED_GREEN"
+        },
         "NUCLEO_F429ZI": {
     	    "LED": "LED1",
    	    "SERIAL_TX": "SERIAL_TX",
