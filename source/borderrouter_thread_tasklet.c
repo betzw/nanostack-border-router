@@ -170,9 +170,11 @@ static int thread_interface_up(void)
 
 static link_configuration_s* thread_link_configuration_get(link_configuration_s *link_configuration)
 {
+#ifdef MBED_CONF_APP_THREAD_USE_STATIC_LINK_CONFIG
 #if (false == MBED_CONF_APP_THREAD_USE_STATIC_LINK_CONFIG)
         // NOT using static link configuration values, return NULL
         return NULL;
+#endif
 #endif
 
     memset(link_configuration, 0, sizeof(link_configuration_s));
@@ -449,6 +451,17 @@ static int backhaul_interface_down(void)
     return retval;
 }
 
+#if MBED_CONF_APP_DEBUG_TRACE
+static void print_interface_addresses(void)
+{
+    tr_info("Backhaul interface addresses:");
+    print_interface_addr(thread_br_conn_handler_eth_interface_id_get());
+
+    tr_info("RF interface addresses:");
+    print_interface_addr(thread_br_conn_handler_thread_interface_id_get());
+}
+#endif
+
 /**
   * \brief Border Router Main Tasklet
   *
@@ -507,11 +520,13 @@ static void borderrouter_tasklet(arm_event_s *event)
             eventOS_event_timer_cancel(event->event_id, event->receiver);
 
             if (event->event_id == 9) {
-#ifdef MBED_CONF_APP_DEBUG_TRACE
-#if MBED_CONF_APP_DEBUG_TRACE == 1
+#if MBED_CONF_APP_DEBUG_TRACE
                 arm_print_routing_table();
                 arm_print_neigh_cache();
-#endif
+                print_memory_stats();
+                // Trace interface addresses. This trace can be removed if nanostack prints added/removed
+                // addresses.
+                print_interface_addresses();
 #endif
                 eventOS_event_timer_request(9, ARM_LIB_SYSTEM_TIMER_EVENT, br_tasklet_id, 20000);
             }

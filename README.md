@@ -49,7 +49,7 @@ $ mbed compile
 
 The target platform is the hardware on which the border router runs. There are number of target platforms already available for you in the mbed OS 5.
 
-If you wish to write your own target, follow the instructions in [Adding target support to mbed OS 5](https://docs.mbed.com/docs/mbed-os-handbook/en/5.3/advanced/porting_guide/).
+If you wish to write your own target, follow the instructions in [Adding target support to mbed OS 5](https://docs.mbed.com/docs/mbed-os-handbook/en/latest/advanced/porting_guide/).
 
 The border router requires backhaul and RF drivers to be provided for Nanostack. The backhaul is either SLIP or Ethernet. Currently, there are drivers for the following backhauls:
 
@@ -80,6 +80,7 @@ Applications using Nanostack Border Router need to use a `.json` file for the co
 | `backhaul-prefix`                     | The IPv6 prefix (64 bits) assigned to and advertised on the backhaul interface. Example format: `fd00:1:2::` |
 | `backhaul-default-route`              | The default route (prefix and prefix length) where packets should be forwarded on the backhaul device, default: `::/0`. Example format: `fd00:a1::/10` |
 | `backhaul-next-hop`                   | The next-hop value for the backhaul default route; should be a link-local address of a neighboring router, default: empty (on-link prefix). Example format: `fe80::1` |
+| `backhaul-mld`                        | Enable sending Multicast Listener Discovery reports to backhaul network when a new multicast listener is registered in mesh network. Values: true or false |
 
 ### 6LoWPAN ND border router options
 
